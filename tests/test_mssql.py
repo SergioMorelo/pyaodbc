@@ -83,6 +83,7 @@ def cursor(connection):
         ("convert(ntext, N'тест')", 'тест'),
         ("convert(nchar(4), N'тест')", 'тест'),
         ("convert(nvarchar, N'тест')", 'тест'),
+        ("convert(nvarchar(max), N'тест')", 'тест'),
         ("convert(nvarchar, N'😊')", '😊'),
         ("convert(ntext, N'тест')", 'тест'),
         ("'default'", 'default'),
