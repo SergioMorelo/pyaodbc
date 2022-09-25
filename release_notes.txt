@@ -1,0 +1,3 @@
+0.1.1 2022-09-25:
+- added max length support for varchar
+- added max length support for nvarchar
