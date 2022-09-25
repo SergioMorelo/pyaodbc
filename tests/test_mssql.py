@@ -78,6 +78,7 @@ def cursor(connection):
         ("convert(char(4), 'test')", 'test'),
         ("convert(char, 'test')", 'test' + ' ' * 26),
         ("convert(varchar, 'test')", 'test'),
+        ("convert(varchar(max), 'test')", 'test'),
         ("convert(text, 'test')", 'test'),
         ("convert(ntext, N'тест')", 'тест'),
         ("convert(nchar(4), N'тест')", 'тест'),
