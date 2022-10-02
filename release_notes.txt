@@ -1,3 +1,7 @@
 0.1.1 2022-09-25:
 - added max length support for varchar
 - added max length support for nvarchar
+
+0.1.2 2022-10-02:
+- added check for max concurrent activities
+- added raising an exception when the allowed number of cursors from one connection is exceeded
