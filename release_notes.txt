@@ -5,3 +5,8 @@
 0.1.2 2022-10-02:
 - added check for max concurrent activities
 - added raising an exception when the allowed number of cursors from one connection is exceeded
+
+0.1.3 2022-11-07:
+- added error check on functions SQLGetData
+- changed logic getting WCHAR on SQLGetData
+- changed logic getting CHAR on SQLGetData
