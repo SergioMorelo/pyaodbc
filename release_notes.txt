@@ -10,3 +10,12 @@
 - added error check on functions SQLGetData
 - changed logic getting WCHAR on SQLGetData
 - changed logic getting CHAR on SQLGetData
+
+0.1.4 2022-11-30
+- fixed logic getting WCHAR on SQLGetData
+- fixed logic getting CHAR on SQLGetData
+- fixed SQL bind parameters
+- fixed C-pointers
+- fixed CPython link counters
+- fixed the events in Linux
+- added more Python MSSQL tests
