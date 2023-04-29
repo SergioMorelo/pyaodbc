@@ -19,3 +19,9 @@
 - fixed CPython link counters
 - fixed the events in Linux
 - added more Python MSSQL tests
+
+0.1.5 2023-04-29
+- fixed CPython link counters
+- fixed a cleaning parameters after a cursor execution
+- fixed memory leaks
+- added SQL_WLONGVARCHAR type for a string with length more 2000 symbols
