@@ -8,7 +8,7 @@ from setuptools import setup, Extension
 
 
 LIBRARY_NAME = 'pyaodbc'
-VERSION = '0.2.0'
+VERSION = '0.2'
 
 
 def uninstall_pyaodbc():
