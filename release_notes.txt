@@ -25,3 +25,9 @@
 - fixed a cleaning parameters after a cursor execution
 - fixed memory leaks
 - added SQL_WLONGVARCHAR type for a string with length more 2000 symbols
+
+0.2.0 2023-05-28
+- fixed CPython link counters
+- added the query timeout
+- added the attribute for control CPU Usage
+- replaced the deprecated C-API function
