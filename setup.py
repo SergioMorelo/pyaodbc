@@ -102,6 +102,7 @@ def main():
         url='https://github.com/SergioMorelo/pyaodbc',
         description='Library for asynchronous connection and execution of queries to the database via ODBC driver',
         long_description=long_description,
+        long_description_content_type='text/markdown',
         download_url='https://pypi.org/project/pyaodbc/',
         classifiers=classifiers,
         platforms=platforms,
