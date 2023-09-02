@@ -353,6 +353,7 @@ int prepare_execute(Cursor *self, const wchar_t *query, PyObject *params, Py_ssi
 
     #elif __linux__
     self->event = create_t_event();
+    self->event_status = 258;
     CHECK_EVENT_ERROR(self->event, "prepare_execute::create_t_event");
 
     self->event->obj = self;
