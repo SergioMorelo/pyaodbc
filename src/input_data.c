@@ -103,7 +103,7 @@ int bind_float(Cursor *self, Py_ssize_t parameter_number, PyObject *param, param
         0,
         &parameter_data->value.v_float,
         0,
-        NULL
+        &parameter_data->indicator
     );
     CHECK_ERROR("bind_float::SQLBindParameter");
 
