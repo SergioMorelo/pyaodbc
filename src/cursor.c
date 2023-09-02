@@ -131,6 +131,7 @@ static PyObject* Cursor_Next(Cursor *self)
                 clock() / CLOCKS_PER_SEC - self->start_time >= self->timeout + (long long)(1 / self->conn->rate)
             ) {
                 self->event_status = WAIT_OBJECT_0;
+                self->state = EXECUTED;
                 
                 PyErr_Format(PyExc_SystemError, "(%s) An event error", __FUNCTION__);
                 return NULL;
