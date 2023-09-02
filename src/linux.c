@@ -13,7 +13,6 @@ HANDLE create_t_event()
 
     event->state = 258;
     event->obj = NULL;
-    event->str = NULL;
     event->thread = 0;
     return event;
 }
@@ -23,7 +22,6 @@ void close_t_event(HANDLE event)
 {
     event->state = 258;
     event->obj = NULL;
-    event->str = NULL;
     event->thread = 0;
 
     free(event);

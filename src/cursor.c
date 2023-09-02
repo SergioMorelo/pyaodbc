@@ -262,7 +262,6 @@ void* t_sql_exec_direct_w(void *handle)
     
     HANDLE event = (HANDLE)handle;
 
-    const wchar_t *w_query = event->str;
     Cursor *cursor = event->obj;
 
     char16_t *query = wctouc(cursor->query);
@@ -355,7 +354,6 @@ int prepare_execute(Cursor *self, const wchar_t *query, PyObject *params, Py_ssi
     CHECK_EVENT_ERROR(self->event, "prepare_execute::create_t_event");
 
     self->event->obj = self;
-    self->event->str = query;
 
     pthread_create(&self->event->thread, NULL, t_sql_exec_direct_w, self->event);
     pthread_detach(self->event->thread);

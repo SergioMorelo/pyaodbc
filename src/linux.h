@@ -16,7 +16,6 @@
 typedef struct t_event {
     short state;
     void *obj;
-    const wchar_t *str;
     pthread_t thread;
 } t_event;
 

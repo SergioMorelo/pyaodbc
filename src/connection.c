@@ -22,7 +22,6 @@ void* t_sql_driver_connect_w(void *handle)
 
     SQLWCHAR out_conn_str[1024];
     SQLSMALLINT out_conn_str_len;
-    const wchar_t *w_dsn = event->str;
     Connection *conn = event->obj;
 
     char16_t *dsn = wctouc(conn->dsn);
@@ -131,7 +130,6 @@ int connect_async(Connection *self, const wchar_t *dsn, long long timeout)
     CHECK_EVENT_ERROR(self->event, "connect_async::create_t_event");
 
     self->event->obj = self;
-    self->event->str = dsn;
 
     pthread_create(&self->event->thread, NULL, t_sql_driver_connect_w, self->event);
     pthread_detach(self->event->thread);
