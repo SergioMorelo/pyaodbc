@@ -70,16 +70,16 @@ char* get_error_message(const char *fn_name, SQLHANDLE handle, SQLSMALLINT handl
                 w_error_message
             );
 
-            char *error_message = (char *)malloc(sizeof(char) * (size_t)new_size);
-            if (error_message != NULL) {
-                strcpy(error_message, buffer);
+            char *formatted_error_message = (char *)malloc(sizeof(char) * (size_t)new_size);
+            if (formatted_error_message != NULL) {
+                strcpy(formatted_error_message, buffer);
             }
 
             free(buffer);
             free(w_sql_state);
             free(w_error_message);
 
-            return error_message; 
+            return formatted_error_message; 
         }
     } while (SQL_SUCCEEDED(retcode));
     
