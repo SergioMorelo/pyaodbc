@@ -302,16 +302,16 @@ int prepare_execute(Cursor *self, const wchar_t *query, PyObject *params, Py_ssi
             return -1;
         }
 
-        for (Py_ssize_t i = 0; i < params_length; i++) {
-            parameters[i].alloc_str = 0;
-            parameters[i].indicator = SQL_NTS;
-            PyObject *param = PyTuple_GetItem(params, i);
-            if (bind_parameter(self, i, param, &parameters[i]) == -1) {
+        for (Py_ssize_t parameter_number = 0; parameter_number < params_length; parameter_number++) {
+            parameters[parameter_number].alloc_str = 0;
+            parameters[parameter_number].indicator = SQL_NTS;
+            PyObject *param = PyTuple_GetItem(params, parameter_number);
+            if (bind_parameter(self, parameter_number, param, &parameters[parameter_number]) == -1) {
                 if (!PyErr_Occurred()) {
                     PyErr_Format(
                         PyExc_TypeError,
                         "(%s) The parameter type %lld in the query isn't supported for passing to SQL",
-                        __FUNCTION__, i + 1
+                        __FUNCTION__, parameter_number + 1
                     );
                 }
                 return -1;
