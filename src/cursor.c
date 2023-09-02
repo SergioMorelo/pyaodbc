@@ -76,7 +76,7 @@ int allocate_cursor(Cursor *self, Connection *conn)
 {
     PRINT_DEBUG_MESSAGE(__FUNCTION__);
 
-    self->conn = NULL;
+    self->conn = conn;
     self->handle = SQL_NULL_HSTMT;
     self->handle_type = SQL_HANDLE_STMT;
     self->retcode = -1;
@@ -92,7 +92,6 @@ int allocate_cursor(Cursor *self, Connection *conn)
     self->retcode = SQLAllocHandle(SQL_HANDLE_STMT, conn->handle, &self->handle);
     CHECK_ERROR("allocate_cursor::SQLAllocHandle::SQL_HANDLE_STMT");
 
-    self->conn = conn;
     return 0;
 }
 
