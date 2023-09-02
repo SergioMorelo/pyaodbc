@@ -44,4 +44,12 @@ extern int check_error(PyObject *self, const char *fn_name);
 } while(0)
 
 
+#define PY_MEM_FREE_TO_NULL(p) do { \
+    if (p != NULL) { \
+        PyMem_Free((void *)p); \
+        p = NULL; \
+    } \
+} while(0)
+
+
 #endif
