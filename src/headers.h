@@ -8,6 +8,7 @@
 
 #ifdef __linux__
 #include "linux.h"
+typedef short ESTATUS;
 #endif
 
 #ifdef _WIN32
@@ -15,6 +16,7 @@
 #include <stdlib.h>
 #include <wchar.h>
 #include <time.h>
+typedef DWORD ESTATUS;
 #endif
 
 #include <stdio.h>
