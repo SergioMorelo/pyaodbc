@@ -54,6 +54,8 @@ int free_cursor(Cursor *self)
         self->retcode = -1;
         self->state = CLOSED;
 
+        PY_MEM_FREE_TO_NULL(self->query);
+
         return 0;
     }
 
@@ -418,11 +420,14 @@ static PyObject* Cursor_Execute(PyObject *self, PyObject *args, PyObject *kwargs
 
     if (check_parameters_equality(query, params_length) == -1) {
         Py_XDECREF(params);
+        PyMem_Free((void *)query);
         return NULL;
     }
 
     if (prepare_execute((Cursor *)self, query, params, params_length, timeout) == -1) {
         Py_XDECREF(params);
+        PY_MEM_FREE_TO_NULL(self->query);
+
         return NULL;
     }
     Py_XDECREF(params);
