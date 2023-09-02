@@ -381,13 +381,6 @@ static PyObject* Cursor_Execute(Cursor *self, PyObject *args, PyObject *kwargs)
         return NULL;
     }
 
-    string_length = PyUnicode_GET_LENGTH(py_query);
-    query = PyUnicode_AsWideCharString(py_query, &string_length);
-    if (query == NULL) {
-        PyErr_NoMemory();
-        return NULL;
-    }
-
     if (timeout < 0) {
         PyErr_Format(PyExc_AttributeError, "(%s) The value must be nonnegative", __FUNCTION__);
         return NULL;
@@ -408,6 +401,13 @@ static PyObject* Cursor_Execute(Cursor *self, PyObject *args, PyObject *kwargs)
         }
     }
 
+    string_length = PyUnicode_GET_LENGTH(py_query);
+    query = (const wchar_t *)PyUnicode_AsWideCharString(py_query, &string_length);
+    if (query == NULL) {
+        PyErr_NoMemory();
+        return NULL;
+    }
+    
     if (check_parameters_equality(query, params_length) == -1) {
         Py_XDECREF(params);
         PyMem_Free((void *)query);
