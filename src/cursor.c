@@ -148,22 +148,11 @@ static PyObject* Cursor_Next(Cursor *self)
 
         #ifdef _WIN32
         SQLCompleteAsync(self->handle_type, self->handle, &self->retcode);
-        #endif
         PRINT_DEBUG_MESSAGE("SQLCompleteAsync");
+        #endif
 
-        if (self->event != NULL) {
-            #ifdef _WIN32
-            CloseHandle(self->event);
-            PRINT_DEBUG_MESSAGE("Cursor_Next::Close Handle");
-
-            #elif __linux__
-            close_t_event(self->event);
-            PRINT_DEBUG_MESSAGE("Cursor_Next::close_t_event Handle");
-            #endif
-            
-            self->event = NULL;
-            self->event_status = 258;
-        }
+        close_event(&self->event, &self->event_status);
+        PRINT_DEBUG_MESSAGE("Cursor_Next::Close Handle");
 
         if (check_error((PyObject *)self, "Cursor_Next::SQLCompleteAsync")) {
             return NULL;
