@@ -79,4 +79,22 @@ typedef struct Cursor {
 } Cursor;
 
 
+inline void close_event(HANDLE *event, ESTATUS *event_status)
+{
+    #ifdef _WIN32
+    if (*event != NULL && *event != INVALID_HANDLE_VALUE) {
+        CloseHandle(*event);
+        *event = NULL;
+        *event_status = 258;
+    }
+    #elif __linux__
+    if (*event != NULL) {
+        close_t_event(*event);
+        *event = NULL;
+        *event_status = 258;
+    }
+    #endif
+}
+
+
 #endif
