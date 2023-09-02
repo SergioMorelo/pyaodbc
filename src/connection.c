@@ -222,6 +222,13 @@ static PyObject* Connection_Next(Connection *self)
             if (check_error((PyObject *)self, "Connection_Next::SQLFreeHandle::SQL_HANDLE_DBC")) {
                 return NULL;
             }
+
+            self->retcode = SQLFreeHandle(SQL_HANDLE_ENV, self->env);
+            if (check_error((PyObject *)self, "Connection_Next::SQLFreeHandle::SQL_HANDLE_ENV")) {
+                return NULL;
+            }
+
+            self->env = SQL_NULL_HENV;
             self->handle = SQL_NULL_HDBC;
             self->retcode = -1;
             self->mca = 1;
@@ -230,12 +237,6 @@ static PyObject* Connection_Next(Connection *self)
             self->start_time = 0;
             self->rate = 1.0;
             self->state = DISCONNECTED;
-
-            self->retcode = SQLFreeHandle(SQL_HANDLE_ENV, self->env);
-            if (check_error((PyObject *)self, "Connection_Next::SQLFreeHandle::SQL_HANDLE_ENV")) {
-                return NULL;
-            }
-            self->env = SQL_NULL_HENV;
 
             PRINT_DEBUG_MESSAGE("The connection is disconnected");
         }
