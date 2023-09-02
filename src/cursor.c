@@ -126,8 +126,10 @@ static PyObject* Cursor_Next(Cursor *self)
 
     if (self->state == TO_EXECUTE) {
         if (self->event_status != WAIT_OBJECT_0) {
-            if (self->start_time && \
-                clock() / CLOCKS_PER_SEC - self->start_time >= self->timeout + (long long)(1 / self->conn->rate)) {
+            if (
+                self->start_time && \
+                clock() / CLOCKS_PER_SEC - self->start_time >= self->timeout + (long long)(1 / self->conn->rate)
+            ) {
                 self->event_status = WAIT_OBJECT_0;
                 
                 PyErr_Format(PyExc_SystemError, "(%s) An event error", __FUNCTION__);

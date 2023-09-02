@@ -180,8 +180,10 @@ static PyObject* Connection_Next(Connection *self)
 
     if (self->state == TO_CONNECT || self->state == TO_DISCONNECT) {
         if (self->event_status != WAIT_OBJECT_0) {
-            if (self->start_time && \
-                clock() / CLOCKS_PER_SEC - self->start_time >= self->timeout + (long long)(1 / self->rate)) {
+            if (
+                self->start_time && \
+                clock() / CLOCKS_PER_SEC - self->start_time >= self->timeout + (long long)(1 / self->rate)
+            ) {
                 self->event_status = WAIT_OBJECT_0;
 
                 PyErr_Format(PyExc_SystemError, "(%s) An event error", __FUNCTION__);

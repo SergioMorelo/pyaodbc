@@ -24,12 +24,12 @@ class Cursor:
         pass
 
     async def execute(
-            self,
-            query: str,
-            params: Optional[
-                Tuple[Union[None, int, bool, float, str, datetime.datetime, datetime.date, datetime.time]]
-            ] = None,
-            timeout: int = 0
+        self,
+        query: str,
+        params: Optional[
+            Tuple[Union[None, int, bool, float, str, datetime.datetime, datetime.date, datetime.time]]
+        ] = None,
+        timeout: int = 0
     ) -> Cursor:
         """
         Asynchronous execute the sql query

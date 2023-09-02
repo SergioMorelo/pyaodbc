@@ -258,7 +258,7 @@ int bind_time(Cursor *self, Py_ssize_t parameter_number, PyObject *param, parame
 int bind_parameter(Cursor *self, Py_ssize_t parameter_number, PyObject *param, parameter *parameter_data)
 {
     PRINT_DEBUG_MESSAGE(__FUNCTION__);
-    
+
     PyDateTime_IMPORT;
 
     if (param == Py_None) {
