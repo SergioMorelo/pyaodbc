@@ -80,6 +80,7 @@ int allocate_cursor(Cursor *self, Connection *conn)
     self->state = CLOSED;
     self->p_info.parameters = NULL;
     self->p_info.params_length = 0;
+    self->query = NULL;
     self->timeout = 0;
     self->start_time = 0;
 
@@ -262,7 +263,7 @@ void* t_sql_exec_direct_w(void *handle)
     const wchar_t *w_query = event->str;
     Cursor *cursor = event->obj;
 
-    char16_t *query = wctouc(w_query);
+    char16_t *query = wctouc(cursor->query);
     if (query == NULL) {
         cursor->retcode = -1;
         goto clean_up;
@@ -327,6 +328,7 @@ int prepare_execute(Cursor *self, const wchar_t *query, PyObject *params, Py_ssi
     }
     self->p_info.parameters = parameters;
     self->p_info.params_length = params_length;
+    self->query = query;
     self->timeout = timeout;
 
     self->retcode = SQLSetStmtAttr(self->handle, SQL_ATTR_QUERY_TIMEOUT, (SQLPOINTER)self->timeout, SQL_IS_INTEGER);
@@ -343,7 +345,7 @@ int prepare_execute(Cursor *self, const wchar_t *query, PyObject *params, Py_ssi
     self->retcode = SQLSetStmtAttr(self->handle, SQL_ATTR_ASYNC_STMT_EVENT, self->event, SQL_IS_POINTER);
     CHECK_ERROR("prepare_execute::SQLSetStmtAttr::SQL_ATTR_ASYNC_STMT_EVENT");
 
-    self->retcode = SQLExecDirectW(self->handle, (SQLWCHAR *)query, SQL_NTS);
+    self->retcode = SQLExecDirectW(self->handle, (SQLWCHAR *)self->query, SQL_NTS);
     CHECK_ERROR("prepare_execute::SQLExecDirectW");
 
     #elif __linux__

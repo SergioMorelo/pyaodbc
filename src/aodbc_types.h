@@ -84,6 +84,7 @@ typedef struct Cursor {
     #endif
 
     parameters_info p_info;
+    const wchar_t *query;
     long long timeout;
     clock_t start_time;
     unsigned char state:3;
