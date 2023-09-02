@@ -200,22 +200,11 @@ static PyObject* Connection_Next(Connection *self)
 
         #ifdef _WIN32
         SQLCompleteAsync(self->handle_type, self->handle, &self->retcode);
-        #endif
         PRINT_DEBUG_MESSAGE("Connection_Next::SQLCompleteAsync");
+        #endif
 
-        if (self->event != NULL) {
-            #ifdef _WIN32
-            CloseHandle(self->event);
-            PRINT_DEBUG_MESSAGE("Connection_Next::CloseHandle");
-
-            #elif __linux__
-            close_t_event(self->event);
-            PRINT_DEBUG_MESSAGE("Connection_Next::close_t_event");
-            #endif
-
-            self->event = NULL;
-            self->event_status = 258;
-        }
+        close_event(&self->event, &self->event_status);
+        PRINT_DEBUG_MESSAGE("Connection_Next::CloseHandle");
 
         if (check_error((PyObject *)self, "Connection_Next::SQLCompleteAsync")) {
             return NULL;
