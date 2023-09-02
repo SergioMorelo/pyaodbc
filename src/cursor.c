@@ -26,6 +26,7 @@ void free_parameters(parameters_info *p_info)
         }
         free(p_info->parameters);
         p_info->parameters = NULL;
+        p_info->params_length = 0;
     }
 }
 
