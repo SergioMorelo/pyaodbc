@@ -28,6 +28,7 @@ typedef struct Connection {
 
     SQLUSMALLINT mca;
     SQLUSMALLINT runned_cursors;
+    const wchar_t *dsn;
     long long timeout;
     clock_t start_time;
     double rate;

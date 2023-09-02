@@ -25,7 +25,7 @@ void* t_sql_driver_connect_w(void *handle)
     const wchar_t *w_dsn = event->str;
     Connection *conn = event->obj;
 
-    char16_t *dsn = wctouc(w_dsn);
+    char16_t *dsn = wctouc(conn->dsn);
     if (dsn == NULL) {
         PyErr_NoMemory();
         conn->retcode = -1;
@@ -77,6 +77,7 @@ int connect_async(Connection *self, const wchar_t *dsn, long long timeout)
     self->event_status = 258;
     self->mca = 1;
     self->runned_cursors = 0;
+    self->dsn = dsn;
     self->timeout = timeout;
     self->start_time = 0;
     self->rate = 1.0;
@@ -116,7 +117,7 @@ int connect_async(Connection *self, const wchar_t *dsn, long long timeout)
     self->retcode = SQLDriverConnectW(
         self->handle,
         NULL,
-        (SQLWCHAR *)dsn,
+        (SQLWCHAR *)self->dsn,
         SQL_NTS,
         out_conn_str,
         0,
