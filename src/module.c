@@ -145,13 +145,6 @@ static PyObject* PyAODBC_Connect(PyObject *self, PyObject *args, PyObject *kwarg
         return NULL;
     }
 
-    string_length = PyUnicode_GET_LENGTH(py_dsn);
-    dsn = PyUnicode_AsWideCharString(py_dsn, &string_length);
-    if (dsn == NULL) {
-        PyErr_NoMemory();
-        return NULL;
-    }
-
     if (timeout < 0) {
         PyErr_Format(PyExc_AttributeError, "(%s) The value must be nonnegative", __FUNCTION__);
         return NULL;
@@ -179,6 +172,13 @@ static PyObject* PyAODBC_Connect(PyObject *self, PyObject *args, PyObject *kwarg
 
     Connection *conn = PyObject_New(Connection, &Connection_Type);
     if (conn == NULL) {
+        return NULL;
+    }
+
+    string_length = PyUnicode_GET_LENGTH(py_dsn);
+    dsn = (const wchar_t *)PyUnicode_AsWideCharString(py_dsn, &string_length);
+    if (dsn == NULL) {
+        PyErr_NoMemory();
         return NULL;
     }
 
