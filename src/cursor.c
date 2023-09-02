@@ -54,6 +54,8 @@ int free_cursor(Cursor *self)
         self->handle = SQL_NULL_HSTMT;
         self->retcode = -1;
         self->state = CLOSED;
+        self->timeout = 0;
+        self->start_time = 0;
 
         PY_MEM_FREE_TO_NULL(self->query);
 
