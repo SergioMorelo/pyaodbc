@@ -184,6 +184,7 @@ static PyObject* PyAODBC_Connect(PyObject *self, PyObject *args, PyObject *kwarg
 
     if (connect_async(conn, dsn, timeout) == -1) {
         Py_DECREF(conn);
+        PyMem_Free((void *)dsn);
         return NULL;
     }
 
