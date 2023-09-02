@@ -5,8 +5,6 @@
 // start static declarations
 static PyObject* Connection_Iter(Connection *self);
 static PyObject* Connection_Next(Connection *self);
-static int Connection_Traverse(Connection *self, visitproc visit, void *arg);
-static int Connection_Clear(Connection *self);
 static void Connection_Dealloc(Connection *self);
 static PyAsyncMethods Connection_Awaitable;
 static PyObject* Connection_Cursor(Connection *self);
@@ -269,31 +267,11 @@ static PyObject* Connection_Next(Connection *self)
 }
 
 
-static int Connection_Traverse(Connection *self, visitproc visit, void *arg)
-{
-    PRINT_DEBUG_MESSAGE(__FUNCTION__);
-
-    // Py_VISIT(self);
-    return 0;
-}
-
-
-static int Connection_Clear(Connection *self)
-{
-    PRINT_DEBUG_MESSAGE(__FUNCTION__);
-
-    // Py_CLEAR(self);
-    return 0;
-}
-
-
 static void Connection_Dealloc(Connection *self)
 {
     PRINT_DEBUG_MESSAGE(__FUNCTION__);
 
-    PyObject_GC_UnTrack(self);
-    // Connection_Clear(self);
-    PyObject_GC_Del(self);
+    PyObject_Del(self);
 }
 
 
@@ -353,7 +331,7 @@ static PyObject* Connection_Cursor(Connection *self)
         return NULL;
     }
 
-    Cursor *cursor = PyObject_GC_New(Cursor, &Cursor_Type);
+    Cursor *cursor = PyObject_New(Cursor, &Cursor_Type);
     if (cursor == NULL) {
         return NULL;
     }
@@ -366,7 +344,6 @@ static PyObject* Connection_Cursor(Connection *self)
     cursor->state = OPENED;
 
     Py_INCREF(self);
-    PyObject_GC_Track(cursor);
     return (PyObject *)cursor;
 }
 
@@ -423,11 +400,9 @@ PyTypeObject Connection_Type = {
     .tp_doc = PyDoc_STR("Asynchronous Connection Class"),
     .tp_basicsize = sizeof(Connection),
     .tp_itemsize = 0,
-    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
+    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
     .tp_iter = (getiterfunc)Connection_Iter,
     .tp_iternext = (iternextfunc)Connection_Next,
-    .tp_traverse = (traverseproc)Connection_Traverse,
-    .tp_clear = (inquiry)Connection_Clear,
     .tp_dealloc = (destructor)Connection_Dealloc,
     .tp_as_async = &Connection_Awaitable,
     .tp_methods = Connection_Methods

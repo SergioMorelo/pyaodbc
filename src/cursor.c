@@ -5,8 +5,6 @@
 // start static declarations
 static PyObject* Cursor_Iter(Cursor *self);
 static PyObject* Cursor_Next(Cursor *self);
-static int Cursor_Traverse(Cursor *self, visitproc visit, void *arg);
-static int Cursor_Clear(Cursor *self);
 static void Cursor_Dealloc(Cursor *self);
 static PyAsyncMethods Cursor_Awaitable;
 static PyObject* Cursor_Close(Cursor *self);
@@ -175,24 +173,6 @@ static PyObject* Cursor_Next(Cursor *self)
 }
 
 
-static int Cursor_Traverse(Cursor *self, visitproc visit, void *arg)
-{
-    PRINT_DEBUG_MESSAGE(__FUNCTION__);
-
-    // Py_VISIT(self->conn);
-    return 0;
-}
-
-
-static int Cursor_Clear(Cursor *self)
-{
-    PRINT_DEBUG_MESSAGE(__FUNCTION__);
-
-    // Py_CLEAR(self->conn);
-    return 0;
-}
-
-
 static void Cursor_Dealloc(Cursor *self)
 {
     PRINT_DEBUG_MESSAGE(__FUNCTION__);
@@ -201,10 +181,8 @@ static void Cursor_Dealloc(Cursor *self)
         free_cursor(self);
     }
 
-    PyObject_GC_UnTrack(self);
-    // Cursor_Clear(self);
     Py_CLEAR(self->conn);
-    PyObject_GC_Del(self);
+    PyObject_Del(self);
 }
 
 
@@ -597,11 +575,9 @@ PyTypeObject Cursor_Type = {
     .tp_doc = PyDoc_STR("Asynchronous Cursor Class"),
     .tp_basicsize = sizeof(Cursor),
     .tp_itemsize = 0,
-    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE | Py_TPFLAGS_HAVE_GC,
+    .tp_flags = Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE,
     .tp_iter = (getiterfunc)Cursor_Iter,
     .tp_iternext = (iternextfunc)Cursor_Next,
-    .tp_traverse = (traverseproc)Cursor_Traverse,
-    .tp_clear = (inquiry)Cursor_Clear,
     .tp_dealloc = (destructor)Cursor_Dealloc,
     .tp_as_async = &Cursor_Awaitable,
     .tp_methods = Cursor_Methods

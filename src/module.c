@@ -177,7 +177,7 @@ static PyObject* PyAODBC_Connect(PyObject *self, PyObject *args, PyObject *kwarg
         return NULL;
     }
 
-    Connection *conn = PyObject_GC_New(Connection, &Connection_Type);
+    Connection *conn = PyObject_New(Connection, &Connection_Type);
     if (conn == NULL) {
         return NULL;
     }
@@ -193,7 +193,6 @@ static PyObject* PyAODBC_Connect(PyObject *self, PyObject *args, PyObject *kwarg
         conn->start_time = clock() / CLOCKS_PER_SEC;
     }
     
-    PyObject_GC_Track(conn);
     return (PyObject *)conn;
 }
 
