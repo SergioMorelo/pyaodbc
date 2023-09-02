@@ -9,7 +9,7 @@ static void Cursor_Dealloc(Cursor *self);
 static PyAsyncMethods Cursor_Awaitable;
 static PyObject* Cursor_Close(Cursor *self);
 static PyObject* Cursor_Exit(Cursor *self, PyObject* args);
-static PyObject* Cursor_Execute(PyObject *self, PyObject *args, PyObject *kwargs);
+static PyObject* Cursor_Execute(Cursor *self, PyObject *args, PyObject *kwargs);
 static PyObject* Cursor_Fetchall(Cursor *self);
 // end static declarations
 
@@ -368,7 +368,7 @@ int prepare_execute(Cursor *self, const wchar_t *query, PyObject *params, Py_ssi
 }
 
 
-static PyObject* Cursor_Execute(PyObject *self, PyObject *args, PyObject *kwargs)
+static PyObject* Cursor_Execute(Cursor *self, PyObject *args, PyObject *kwargs)
 {
     PRINT_DEBUG_MESSAGE(__FUNCTION__);
 
@@ -431,7 +431,7 @@ static PyObject* Cursor_Execute(PyObject *self, PyObject *args, PyObject *kwargs
     Py_XDECREF(params);
 
     Py_INCREF(self);
-    return self;
+    return (PyObject *)self;
 }
 
 
