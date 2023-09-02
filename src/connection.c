@@ -149,13 +149,13 @@ static PyObject* Connection_Iter(Connection *self)
 }
 
 
-SQLUSMALLINT get_max_concurrent_activities(SQLHDBC *handle)
+SQLUSMALLINT get_max_concurrent_activities(SQLHDBC handle)
 {
     PRINT_DEBUG_MESSAGE(__FUNCTION__);
     
     SQLRETURN retcode;
     SQLUSMALLINT mca;
-    retcode = SQLGetInfo(*handle, SQL_MAX_CONCURRENT_ACTIVITIES, &mca, sizeof(mca), NULL);
+    retcode = SQLGetInfo(handle, SQL_MAX_CONCURRENT_ACTIVITIES, &mca, sizeof(mca), NULL);
 
     if (!SQL_SUCCEEDED(retcode)) {
         mca = 1;
@@ -223,7 +223,7 @@ static PyObject* Connection_Next(Connection *self)
         }
 
         if (self->state == TO_CONNECT) {
-            self->mca = get_max_concurrent_activities(&self->handle);
+            self->mca = get_max_concurrent_activities(self->handle);
             self->state = CONNECTED;
 
             PRINT_DEBUG_MESSAGE("The connection is established");

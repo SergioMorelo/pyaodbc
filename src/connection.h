@@ -15,7 +15,7 @@ extern char16_t* wctouc(const wchar_t *wc);
 #endif
 
 int connect_async(Connection *self, const wchar_t *dsn, long long timeout);
-SQLUSMALLINT get_max_concurrent_activities(SQLHDBC *handle);
+SQLUSMALLINT get_max_concurrent_activities(SQLHDBC handle);
 int disconnect_async(Connection *self);
 
 extern int check_error(PyObject *self, const char *fn_name);
