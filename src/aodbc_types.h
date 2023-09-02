@@ -19,13 +19,7 @@ typedef struct Connection {
     SQLSMALLINT handle_type;
     SQLRETURN retcode;
     HANDLE event;
-
-    #ifdef _WIN32
-    DWORD event_status;
-    #elif __linux__
-    short event_status;
-    #endif
-
+    ESTATUS event_status;
     SQLUSMALLINT mca;
     SQLUSMALLINT runned_cursors;
     const wchar_t *dsn;
@@ -76,13 +70,7 @@ typedef struct Cursor {
     SQLSMALLINT handle_type;
     SQLRETURN retcode;
     HANDLE event;
-
-    #ifdef _WIN32
-    DWORD event_status;
-    #elif __linux__
-    short event_status;
-    #endif
-
+    ESTATUS event_status;
     parameters_info p_info;
     const wchar_t *query;
     long long timeout;
