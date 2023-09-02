@@ -465,7 +465,6 @@ PyObject* get_char(Cursor *self, SQLUSMALLINT column_number)
         buffer = (SQLCHAR *)realloc(buffer, len_or_indicator + null_terminated);
         if (buffer == NULL) {
             PyErr_NoMemory();
-            free(buffer);
             return NULL;
         }
     }
@@ -484,7 +483,6 @@ PyObject* get_char(Cursor *self, SQLUSMALLINT column_number)
         buffer = (SQLCHAR *)realloc(buffer, allocated);
         if (buffer == NULL) {
             PyErr_NoMemory();
-            free(buffer);
             return NULL;
         }
 
@@ -566,7 +564,6 @@ PyObject* get_wchar(Cursor *self, SQLUSMALLINT column_number)
         buffer = (SQLWCHAR *)realloc(buffer, len_or_indicator + null_terminated);
         if (buffer == NULL) {
             PyErr_NoMemory();
-            free(buffer);
             return NULL;
         }
     }
@@ -585,7 +582,6 @@ PyObject* get_wchar(Cursor *self, SQLUSMALLINT column_number)
         buffer = (SQLWCHAR *)realloc(buffer, allocated);
         if (buffer == NULL) {
             PyErr_NoMemory();
-            free(buffer);
             return NULL;
         }
 
