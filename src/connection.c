@@ -226,7 +226,7 @@ static PyObject* Connection_Next(Connection *self)
         if (self->state == TO_CONNECT) {
             self->mca = get_max_concurrent_activities(self->handle);
             self->state = CONNECTED;
-
+            PY_MEM_FREE_TO_NULL(self->dsn);
             PRINT_DEBUG_MESSAGE("The connection is established");
         }
 
@@ -272,6 +272,7 @@ static void Connection_Dealloc(Connection *self)
 {
     PRINT_DEBUG_MESSAGE(__FUNCTION__);
 
+    PY_MEM_FREE_TO_NULL(self->dsn);
     PyObject_Del(self);
 }
 
