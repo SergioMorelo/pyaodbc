@@ -178,6 +178,8 @@ static void Cursor_Dealloc(Cursor *self)
         free_cursor(self);
     }
 
+    close_event(&self->event, &self->event_status);
+
     Py_CLEAR(self->conn);
     PyObject_Del(self);
 }
