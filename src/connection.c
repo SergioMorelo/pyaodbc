@@ -262,6 +262,15 @@ static void Connection_Dealloc(Connection *self)
 {
     PRINT_DEBUG_MESSAGE(__FUNCTION__);
 
+    if (self->handle) {
+        SQLFreeHandle(SQL_HANDLE_DBC, self->handle);
+    }
+
+    if (self->env) {
+        SQLFreeHandle(SQL_HANDLE_ENV, self->env);
+    }
+
+    close_event(&self->event, &self->event_status);
     PY_MEM_FREE_TO_NULL(self->dsn);
     PyObject_Del(self);
 }
