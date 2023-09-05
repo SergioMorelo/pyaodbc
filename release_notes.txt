@@ -1,15 +1,18 @@
-0.1.1 2022-09-25:
-- added max length support for varchar
-- added max length support for nvarchar
+0.2.1 2023-09-05
+- disabled GC
+- fixed memory bugs
 
-0.1.2 2022-10-02:
-- added check for max concurrent activities
-- added raising an exception when the allowed number of cursors from one connection is exceeded
+0.2 2023-05-28
+- fixed CPython link counters
+- added the query timeout
+- added the attribute for control CPU Usage
+- replaced the deprecated C-API function
 
-0.1.3 2022-11-07:
-- added error check on functions SQLGetData
-- changed logic getting WCHAR on SQLGetData
-- changed logic getting CHAR on SQLGetData
+0.1.5 2023-04-29
+- fixed CPython link counters
+- fixed a cleaning parameters after a cursor execution
+- fixed memory leaks
+- added SQL_WLONGVARCHAR type for a string with length more 2000 symbols
 
 0.1.4 2022-11-30
 - fixed logic getting WCHAR on SQLGetData
@@ -20,14 +23,15 @@
 - fixed the events in Linux
 - added more Python MSSQL tests
 
-0.1.5 2023-04-29
-- fixed CPython link counters
-- fixed a cleaning parameters after a cursor execution
-- fixed memory leaks
-- added SQL_WLONGVARCHAR type for a string with length more 2000 symbols
+0.1.3 2022-11-07:
+- added error check on functions SQLGetData
+- changed logic getting WCHAR on SQLGetData
+- changed logic getting CHAR on SQLGetData
 
-0.2.0 2023-05-28
-- fixed CPython link counters
-- added the query timeout
-- added the attribute for control CPU Usage
-- replaced the deprecated C-API function
+0.1.2 2022-10-02:
+- added check for max concurrent activities
+- added raising an exception when the allowed number of cursors from one connection is exceeded
+
+0.1.1 2022-09-25:
+- added max length support for varchar
+- added max length support for nvarchar
